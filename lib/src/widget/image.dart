@@ -17,6 +17,7 @@ class KCachedImg extends StatelessWidget {
     this.radius = 10,
     this.width,
     this.showPreview = false,
+    this.alignment = Alignment.center,
   });
 
   final Color? color;
@@ -27,6 +28,7 @@ class KCachedImg extends StatelessWidget {
   final bool showPreview;
   final String url;
   final double? width;
+  final Alignment alignment;
 
   ImageProvider get provider => CachedNetworkImageProvider(
         url,
@@ -47,10 +49,11 @@ class KCachedImg extends StatelessWidget {
           borderRadius: BorderRadius.circular(radius),
           onTap: showPreview ? () => _onTap(context) : null,
           child: CachedNetworkImage(
+            imageUrl: url,
+            alignment: alignment,
             color: color,
             height: height,
             width: width,
-            imageUrl: url,
             fit: fit,
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 KShimmer(

@@ -79,13 +79,12 @@ class CardStyleSelection extends StatelessWidget {
                           children: [
                             Card(
                               clipBehavior: Clip.antiAliasWithSaveLayer,
-                              child: Image.asset(
+                              child: KCachedImg(
                                 e.previewImg,
                                 height: 100,
                                 width: 70,
                                 fit: BoxFit.cover,
                                 alignment: Alignment.topCenter,
-                                package: 'marj_card_styles',
                               ),
                             ),
                             if (currentStyle == e)

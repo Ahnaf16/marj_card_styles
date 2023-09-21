@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marj_card_styles/src/model/model.dart';
-import 'package:marj_card_styles/src/util/assets.dart';
+import 'package:marj_card_styles/src/util/util.dart';
 
 import '../styles/styles.dart';
 
@@ -16,8 +16,8 @@ enum CardStyle {
       };
 
   String get previewImg => switch (this) {
-        classic => Assets.stylesClassic.path,
-        classicV2 => Assets.stylesClassicV2.path,
-        classicV3 => Assets.stylesClassicV3.path,
+        classic => StyleImg.stylesClassic,
+        classicV2 => StyleImg.stylesClassicV2,
+        classicV3 => StyleImg.stylesClassicV3,
       };
 }
