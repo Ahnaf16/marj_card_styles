@@ -54,7 +54,7 @@ class CardStyleSelection extends StatelessWidget {
                   onLongPress: () => showDialog(
                     context: context,
                     builder: (BuildContext ctx) =>
-                        ImageDialog(url: e.previewImg, isAsset: true),
+                        ImageDialog(url: e.previewImg),
                   ),
                   onTap: () async {
                     context.pop;
