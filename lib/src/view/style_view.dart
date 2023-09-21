@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:marj_card_styles/src/util/util.dart';
 import 'package:marj_card_styles/src/widget/image.dart';
 
-import 'model/model.dart';
+import '../model/model.dart';
 
 class CardStyleSelection extends StatelessWidget {
   const CardStyleSelection({

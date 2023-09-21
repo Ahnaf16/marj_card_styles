@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:marj_card_styles/src/model/model.dart';
+import 'package:marj_card_styles/src/theme/default_theme.dart';
 import 'package:marj_card_styles/src/util/util.dart';
 import 'package:marj_card_styles/src/widget/action_card.dart';
 import 'package:marj_card_styles/src/widget/widget.dart';
 
 class ClassicV3Card extends StatelessWidget {
-  const ClassicV3Card(this.card, this.theme, {super.key});
+  const ClassicV3Card(this.card, {super.key});
 
   final CardModel card;
-  final ThemeData? theme;
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: theme ?? context.theme,
+      data: Palette.defTheme,
       child: Column(
         children: [
           Stack(
@@ -47,7 +47,7 @@ class ClassicV3Card extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: context.colorTheme.background,
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: const [_defaultBoxShadow],
+                        boxShadow: [Palette.defaultBoxShadow],
                       ),
                       alignment: Alignment.center,
                       child: Column(
@@ -238,7 +238,7 @@ class ClassicV3Card extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: context.colorTheme.background,
                       borderRadius: BorderRadius.circular(10),
-                      boxShadow: const [_defaultBoxShadow],
+                      boxShadow: [Palette.defaultBoxShadow],
                     ),
                     margin: const EdgeInsets.all(10),
                     child: KCachedImg(
@@ -286,9 +286,7 @@ class ShowcaseCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.colorTheme.background,
         borderRadius: BorderRadius.circular(10),
-        boxShadow: const [
-          _defaultBoxShadow,
-        ],
+        boxShadow: [Palette.defaultBoxShadow],
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -311,6 +309,3 @@ class ShowcaseCard extends StatelessWidget {
     );
   }
 }
-
-const BoxShadow _defaultBoxShadow =
-    BoxShadow(blurRadius: 3, offset: Offset(3, 3));

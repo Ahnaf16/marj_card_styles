@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:marj_card_styles/src/model/model.dart';
+import 'package:marj_card_styles/src/theme/default_theme.dart';
 import 'package:marj_card_styles/src/util/util.dart';
 import 'package:marj_card_styles/src/widget/action_card.dart';
 import 'package:marj_card_styles/src/widget/widget.dart';
 
 class ClassicV2Card extends StatelessWidget {
-  const ClassicV2Card(this.card, this.theme, {super.key});
+  const ClassicV2Card(this.card, {super.key});
 
   final CardModel card;
-  final ThemeData? theme;
+
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: theme ?? context.theme,
+      data: Palette.defTheme,
       child: Padding(
         padding: defaultFullBodyPadding,
         child: Column(
