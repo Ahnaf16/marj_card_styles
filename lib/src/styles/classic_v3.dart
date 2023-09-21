@@ -179,7 +179,12 @@ class ClassicV3Card extends StatelessWidget {
                 ShowcaseCard(
                   header: 'About',
                   children: [
-                    Text(card.about),
+                    Text(
+                      card.about,
+                      style: context.textTheme.titleMedium?.copyWith(
+                        color: context.colorTheme.onBackground.withOpacity(0.8),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -228,6 +233,7 @@ class ClassicV3Card extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 MasonryGridView.builder(
+                  physics: const ScrollPhysics(),
                   shrinkWrap: true,
                   gridDelegate:
                       const SliverSimpleGridDelegateWithFixedCrossAxisCount(

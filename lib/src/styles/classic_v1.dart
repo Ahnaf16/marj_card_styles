@@ -191,6 +191,7 @@ class ClassicCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 MasonryGridView.builder(
+                  physics: const ScrollPhysics(),
                   shrinkWrap: true,
                   gridDelegate:
                       const SliverSimpleGridDelegateWithFixedCrossAxisCount(
