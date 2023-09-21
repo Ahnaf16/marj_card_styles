@@ -6,246 +6,254 @@ import 'package:marj_card_styles/src/widget/action_card.dart';
 import 'package:marj_card_styles/src/widget/widget.dart';
 
 class ClassicV3Card extends StatelessWidget {
-  const ClassicV3Card(this.card, {super.key});
+  const ClassicV3Card(this.card, this.theme, {super.key});
+
   final CardModel card;
+  final ThemeData? theme;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Stack(
-          clipBehavior: Clip.none,
-          children: [
-            const SizedBox(height: 350),
-            AspectRatio(
-              aspectRatio: coverPhotoSize.aspectRatio,
-              child: KCachedImg(
-                card.coverImg,
-                radius: 0,
-                showPreview: true,
-                fit: BoxFit.cover,
-                padding: EdgeInsets.zero,
+    return Theme(
+      data: theme ?? context.theme,
+      child: Column(
+        children: [
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              const SizedBox(height: 350),
+              AspectRatio(
+                aspectRatio: coverPhotoSize.aspectRatio,
+                child: KCachedImg(
+                  card.coverImg,
+                  radius: 0,
+                  showPreview: true,
+                  fit: BoxFit.cover,
+                  padding: EdgeInsets.zero,
+                ),
               ),
-            ),
-            Positioned(
-              top: 50,
-              left: 1,
-              right: 1,
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    constraints: BoxConstraints(
-                      maxWidth: 700,
-                      minWidth: context.isSmall ? context.width : 660,
-                    ),
-                    margin: const EdgeInsets.all(20),
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: context.colorTheme.background,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: const [defaultBoxShadow],
-                    ),
-                    alignment: Alignment.center,
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 70),
-                        Text(
-                          card.name,
-                          style: context.textTheme.headlineMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          card.bio,
-                          style: context.textTheme.titleMedium,
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 10),
-                        FilledButton(
-                          style: FilledButton.styleFrom(
-                            fixedSize: const Size(300, 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+              Positioned(
+                top: 50,
+                left: 1,
+                right: 1,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(
+                        maxWidth: 700,
+                        minWidth: context.isSmall ? context.width : 660,
+                      ),
+                      margin: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: context.colorTheme.background,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [_defaultBoxShadow],
+                      ),
+                      alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 70),
+                          Text(
+                            card.name,
+                            style: context.textTheme.headlineMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: const Text('Contacts'),
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const SizedBox(width: 500),
-                                    ActionCard(
-                                      label: Text(card.primaryPhone),
-                                      actionText: 'Call',
-                                      actionIcon: Icons.call_rounded,
-                                      onActionTap: () =>
-                                          URLHelper.call(card.primaryPhone),
-                                      margin: EdgeInsets.zero,
-                                      leading: const Icon(Icons.call_rounded),
-                                    ),
-                                    if (card.secondaryPhone != null)
-                                      const Divider(height: 30),
-                                    if (card.secondaryPhone != null)
+                          Text(
+                            card.bio,
+                            style: context.textTheme.titleMedium,
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 10),
+                          FilledButton(
+                            style: FilledButton.styleFrom(
+                              fixedSize: const Size(300, 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Text('Contacts'),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const SizedBox(width: 500),
                                       ActionCard(
-                                        label: Text(card.secondaryPhone!),
+                                        label: Text(card.primaryPhone),
                                         actionText: 'Call',
                                         actionIcon: Icons.call_rounded,
-                                        onActionTap: () => URLHelper.call(
-                                            card.secondaryPhone!),
+                                        onActionTap: () =>
+                                            URLHelper.call(card.primaryPhone),
                                         margin: EdgeInsets.zero,
                                         leading: const Icon(Icons.call_rounded),
                                       ),
-                                    const Divider(height: 30),
-                                    ActionCard(
-                                      label: Text(card.email),
-                                      actionText: 'Mail',
-                                      actionIcon: Icons.email_rounded,
-                                      onActionTap: () =>
-                                          URLHelper.mail(card.email),
-                                      margin: EdgeInsets.zero,
-                                      leading: const Icon(Icons.email_rounded),
-                                    ),
-                                  ],
+                                      if (card.secondaryPhone != null)
+                                        const Divider(height: 30),
+                                      if (card.secondaryPhone != null)
+                                        ActionCard(
+                                          label: Text(card.secondaryPhone!),
+                                          actionText: 'Call',
+                                          actionIcon: Icons.call_rounded,
+                                          onActionTap: () => URLHelper.call(
+                                              card.secondaryPhone!),
+                                          margin: EdgeInsets.zero,
+                                          leading:
+                                              const Icon(Icons.call_rounded),
+                                        ),
+                                      const Divider(height: 30),
+                                      ActionCard(
+                                        label: Text(card.email),
+                                        actionText: 'Mail',
+                                        actionIcon: Icons.email_rounded,
+                                        onActionTap: () =>
+                                            URLHelper.mail(card.email),
+                                        margin: EdgeInsets.zero,
+                                        leading:
+                                            const Icon(Icons.email_rounded),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                          child: const Text('Contacts'),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FilledButton.icon(
-                              style: FilledButton.styleFrom(
-                                fixedSize: const Size(100, 40),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                              );
+                            },
+                            child: const Text('Contacts'),
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FilledButton.icon(
+                                style: FilledButton.styleFrom(
+                                  fixedSize: const Size(100, 40),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
+                                onPressed: () =>
+                                    URLHelper.call(card.primaryPhone),
+                                icon: const Icon(Icons.call_rounded),
+                                label: const Text('Call'),
                               ),
-                              onPressed: () =>
-                                  URLHelper.call(card.primaryPhone),
-                              icon: const Icon(Icons.call_rounded),
-                              label: const Text('Call'),
-                            ),
-                            const SizedBox(width: 10),
-                            FilledButton.icon(
-                              style: FilledButton.styleFrom(
-                                fixedSize: const Size(100, 40),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                              const SizedBox(width: 10),
+                              FilledButton.icon(
+                                style: FilledButton.styleFrom(
+                                  fixedSize: const Size(100, 40),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
+                                onPressed: () => URLHelper.mail(card.email),
+                                icon: const Icon(Icons.email_rounded),
+                                label: const Text('Mail'),
                               ),
-                              onPressed: () => URLHelper.mail(card.email),
-                              icon: const Icon(Icons.email_rounded),
-                              label: const Text('Mail'),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    top: -25,
-                    left: 1,
-                    right: 1,
-                    child: Center(
-                      child: CircleAvatar(
-                        backgroundImage: KCachedImg(card.profilePhoto).provider,
-                        radius: 50,
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                        ],
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              ShowcaseCard(
-                header: 'About',
-                children: [
-                  Text(card.about),
-                ],
-              ),
-              const SizedBox(height: 20),
-              ShowcaseCard.wrap(
-                header: 'Social',
-                children: [
-                  ...card.socials.map(
-                    (e) => InkWell(
-                      borderRadius: BorderRadius.circular(5),
-                      onTap: () => URLHelper.url(e.url),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 3,
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            KCachedImg(e.logo, height: 30, width: 30),
-                            const SizedBox(width: 5),
-                            Text(e.name),
-                          ],
+                    Positioned(
+                      top: -25,
+                      left: 1,
+                      right: 1,
+                      child: Center(
+                        child: CircleAvatar(
+                          backgroundImage:
+                              KCachedImg(card.profilePhoto).provider,
+                          radius: 50,
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              ShowcaseCard(
-                header: 'Website',
-                children: [
-                  ActionCard(
-                    label: Text(card.website),
-                    actionText: 'Visit',
-                    actionIcon: Icons.language,
-                    onActionTap: () => URLHelper.url(card.website),
-                    margin: const EdgeInsets.all(0),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Text(
-                "Gallery",
-                style: context.textTheme.titleLarge,
-              ),
-              const SizedBox(height: 2),
-              MasonryGridView.builder(
-                shrinkWrap: true,
-                gridDelegate:
-                    const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
-                itemCount: card.gallery.length,
-                itemBuilder: (context, index) => Container(
-                  decoration: BoxDecoration(
-                    color: context.colorTheme.background,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [defaultBoxShadow],
-                  ),
-                  margin: const EdgeInsets.all(10),
-                  child: KCachedImg(
-                    card.gallery[index],
-                    fit: BoxFit.cover,
-                    padding: const EdgeInsets.all(0),
-                    showPreview: true,
-                  ),
+                  ],
                 ),
               ),
             ],
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                ShowcaseCard(
+                  header: 'About',
+                  children: [
+                    Text(card.about),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                ShowcaseCard.wrap(
+                  header: 'Social',
+                  children: [
+                    ...card.socials.map(
+                      (e) => InkWell(
+                        borderRadius: BorderRadius.circular(5),
+                        onTap: () => URLHelper.url(e.url),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 3,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              KCachedImg(e.logo, height: 30, width: 30),
+                              const SizedBox(width: 5),
+                              Text(e.name),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                ShowcaseCard(
+                  header: 'Website',
+                  children: [
+                    ActionCard(
+                      label: Text(card.website),
+                      actionText: 'Visit',
+                      actionIcon: Icons.language,
+                      onActionTap: () => URLHelper.url(card.website),
+                      margin: const EdgeInsets.all(0),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  "Gallery",
+                  style: context.textTheme.titleLarge,
+                ),
+                const SizedBox(height: 2),
+                MasonryGridView.builder(
+                  shrinkWrap: true,
+                  gridDelegate:
+                      const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
+                  itemCount: card.gallery.length,
+                  itemBuilder: (context, index) => Container(
+                    decoration: BoxDecoration(
+                      color: context.colorTheme.background,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: const [_defaultBoxShadow],
+                    ),
+                    margin: const EdgeInsets.all(10),
+                    child: KCachedImg(
+                      card.gallery[index],
+                      fit: BoxFit.cover,
+                      padding: const EdgeInsets.all(0),
+                      showPreview: true,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -279,7 +287,7 @@ class ShowcaseCard extends StatelessWidget {
         color: context.colorTheme.background,
         borderRadius: BorderRadius.circular(10),
         boxShadow: const [
-          defaultBoxShadow,
+          _defaultBoxShadow,
         ],
       ),
       child: Padding(
@@ -304,5 +312,5 @@ class ShowcaseCard extends StatelessWidget {
   }
 }
 
-const BoxShadow defaultBoxShadow =
+const BoxShadow _defaultBoxShadow =
     BoxShadow(blurRadius: 3, offset: Offset(3, 3));
