@@ -24,7 +24,7 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/
+    - packages/marj_card_styles/assets/
 
   # fonts:
   #   - family: Schyler

@@ -85,6 +85,7 @@ class CardStyleSelection extends StatelessWidget {
                                 width: 70,
                                 fit: BoxFit.cover,
                                 alignment: Alignment.topCenter,
+                                package: 'marj_card_styles',
                               ),
                             ),
                             if (currentStyle == e)
