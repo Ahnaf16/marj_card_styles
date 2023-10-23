@@ -87,6 +87,11 @@ extension StringEx on String {
     return reg.hasMatch(this);
   }
 
+  bool get isNumeric {
+    final reg = RegExp(r'^-?[0-9]+$');
+    return reg.hasMatch(this);
+  }
+
   bool get isValidPhone {
     final reg = RegExp(r'(\+8801\d{9})|(01\d{9})');
     return reg.hasMatch(this);

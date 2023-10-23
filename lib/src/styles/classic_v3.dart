@@ -65,61 +65,82 @@ class ClassicV3Card extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 10),
-                          FilledButton(
-                            style: FilledButton.styleFrom(
-                              fixedSize: const Size(300, 40),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: const Text('Contacts'),
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const SizedBox(width: 500),
-                                      ActionCard(
-                                        label: Text(card.primaryPhone),
-                                        actionText: 'Call',
-                                        actionIcon: Icons.call_rounded,
-                                        onActionTap: () =>
-                                            URLHelper.call(card.primaryPhone),
-                                        margin: EdgeInsets.zero,
-                                        leading: const Icon(Icons.call_rounded),
-                                      ),
-                                      if (card.secondaryPhone != null)
-                                        const Divider(height: 30),
-                                      if (card.secondaryPhone != null)
-                                        ActionCard(
-                                          label: Text(card.secondaryPhone!),
-                                          actionText: 'Call',
-                                          actionIcon: Icons.call_rounded,
-                                          onActionTap: () => URLHelper.call(
-                                              card.secondaryPhone!),
-                                          margin: EdgeInsets.zero,
-                                          leading:
-                                              const Icon(Icons.call_rounded),
-                                        ),
-                                      const Divider(height: 30),
-                                      ActionCard(
-                                        label: Text(card.email),
-                                        actionText: 'Mail',
-                                        actionIcon: Icons.email_rounded,
-                                        onActionTap: () =>
-                                            URLHelper.mail(card.email),
-                                        margin: EdgeInsets.zero,
-                                        leading:
-                                            const Icon(Icons.email_rounded),
-                                      ),
-                                    ],
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FilledButton(
+                                style: FilledButton.styleFrom(
+                                  fixedSize: const Size(200, 40),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
-                              );
-                            },
-                            child: const Text('Contacts'),
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: const Text('Contacts'),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const SizedBox(width: 500),
+                                          ActionCard(
+                                            label: Text(card.primaryPhone),
+                                            actionText: 'Call',
+                                            actionIcon: Icons.call_rounded,
+                                            onActionTap: () => URLHelper.call(
+                                                card.primaryPhone),
+                                            margin: EdgeInsets.zero,
+                                            leading:
+                                                const Icon(Icons.call_rounded),
+                                          ),
+                                          if (card.secondaryPhone != null)
+                                            const SizedBox(height: 30),
+                                          if (card.secondaryPhone != null)
+                                            ActionCard(
+                                              label: Text(card.secondaryPhone!),
+                                              actionText: 'Call',
+                                              actionIcon: Icons.call_rounded,
+                                              onActionTap: () => URLHelper.call(
+                                                  card.secondaryPhone!),
+                                              margin: EdgeInsets.zero,
+                                              leading: const Icon(
+                                                Icons.call_rounded,
+                                              ),
+                                            ),
+                                          const SizedBox(height: 30),
+                                          ActionCard(
+                                            label: Text(card.email),
+                                            actionText: 'Mail',
+                                            actionIcon: Icons.email_rounded,
+                                            onActionTap: () =>
+                                                URLHelper.mail(card.email),
+                                            margin: EdgeInsets.zero,
+                                            leading:
+                                                const Icon(Icons.email_rounded),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const Text('Contacts'),
+                              ),
+                              const SizedBox(width: 10),
+                              FilledButton.icon(
+                                style: FilledButton.styleFrom(
+                                  fixedSize: const Size.fromHeight(40),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  VCardManage.downloadCard(card);
+                                },
+                                icon: const Icon(Icons.save_alt_rounded),
+                                label: const Text('Save'),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 10),
                           Row(

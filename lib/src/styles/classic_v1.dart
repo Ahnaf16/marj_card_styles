@@ -62,16 +62,39 @@ class ClassicCard extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 10),
-          FilledButton.icon(
-            style: FilledButton.styleFrom(
-              fixedSize: const Size(400, 40),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: FilledButton.icon(
+                    style: FilledButton.styleFrom(
+                      fixedSize: const Size.fromHeight(40),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    onPressed: () => URLHelper.mail(card.email),
+                    icon: const Icon(Icons.email_rounded),
+                    label: const Text('Email Now'),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                FilledButton.icon(
+                  style: FilledButton.styleFrom(
+                    fixedSize: const Size.fromHeight(40),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () async {
+                    VCardManage.downloadCard(card);
+                  },
+                  icon: const Icon(Icons.save_alt_rounded),
+                  label: const Text('Save'),
+                ),
+              ],
             ),
-            onPressed: () => URLHelper.mail(card.email),
-            icon: const Icon(Icons.email_rounded),
-            label: const Text('Email Now'),
           ),
           const Divider(height: 40),
           Padding(
@@ -164,49 +187,34 @@ class ClassicCard extends StatelessWidget {
                   actionIcon: Icons.language,
                   onActionTap: () => URLHelper.url(card.website),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Row(
+                const SizedBox(height: 20),
+                if (card.gallery.isNotEmpty)
+                  Column(
                     children: [
-                      Expanded(
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          height: 1,
-                          color: context.colorTheme.outline,
-                        ),
-                      ),
                       Text(
                         "Gallery",
                         style: context.textTheme.titleLarge,
                       ),
-                      Expanded(
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          height: 1,
-                          color: context.colorTheme.outline,
+                      const SizedBox(height: 2),
+                      MasonryGridView.builder(
+                        physics: const ScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                        itemCount: card.gallery.length,
+                        itemBuilder: (context, index) => Card(
+                          child: KCachedImg(
+                            card.gallery[index],
+                            fit: BoxFit.cover,
+                            padding: const EdgeInsets.all(0),
+                            showPreview: true,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 2),
-                MasonryGridView.builder(
-                  physics: const ScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate:
-                      const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemCount: card.gallery.length,
-                  itemBuilder: (context, index) => Card(
-                    child: KCachedImg(
-                      card.gallery[index],
-                      fit: BoxFit.cover,
-                      padding: EdgeInsets.zero,
-                      showPreview: true,
-                    ),
-                  ),
-                ),
               ],
             ),
           ),

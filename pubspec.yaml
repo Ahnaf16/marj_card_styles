@@ -1,6 +1,6 @@
 name: marj_card_styles
 description: A new Flutter package project.
-version: 0.0.8
+version: 0.0.9
 
 environment:
   sdk: ">=3.1.1 <4.0.0"
@@ -16,6 +16,9 @@ dependencies:
   intl: ^0.18.1
   shimmer_animation: ^2.1.0+1
   url_launcher: ^6.1.14
+  universal_html: ^2.2.4
+  flutter_contacts: ^1.1.7+1
+  permission_handler: ^11.0.1
 
 dev_dependencies:
   flutter_test:

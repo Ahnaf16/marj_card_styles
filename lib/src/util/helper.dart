@@ -1,6 +1,14 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:marj_card_styles/src/util/util.dart';
+import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
+import '../model/model.dart';
+import 'vcard/vcard.dart';
 
 class Toaster {
   static show(String message) {
@@ -17,7 +25,7 @@ class Toaster {
 
 class URLHelper {
   static url(String url) async {
-    await launchUrl(Uri(scheme: 'https', path: url));
+    await launchUrlString(url);
   }
 
   static call(String number) async {
@@ -60,5 +68,44 @@ class URLHelper {
     } else {
       Toaster.show('Phone Number is not valid');
     }
+  }
+}
+
+class VCardManage {
+  const VCardManage._();
+
+  static downloadCard(CardModel card) async {
+    final vCardData = await _createVCard(card);
+    if (kIsWeb) {
+      final blob = html.Blob([Uint8List.fromList(vCardData.codeUnits)]);
+      html.AnchorElement(href: html.Url.createObjectUrlFromBlob(blob))
+        ..setAttribute('download', '${card.name}.vcf')
+        ..click();
+    } else {
+      final filePath = '/storage/emulated/0/Download/vCards/${card.name}.vcf';
+      final file = File(filePath);
+      await file.writeAsBytes(Uint8List.fromList(vCardData.codeUnits));
+
+      return filePath;
+    }
+  }
+
+  static Future<String> _createVCard(CardModel card) async {
+    final vcard = VCard();
+    final photo = Photo()..attachFromUrl(card.profilePhoto);
+
+    vcard
+      ..firstName = card.name
+      ..homePhone = card.primaryPhone
+      ..workPhone = card.secondaryPhone ?? ''
+      ..email = card.email
+      ..photo = photo
+      ..url = card.website
+      ..socialUrls = {for (var e in card.socials) e.name: e.url}
+      ..note = 'Created with MARJ NFC';
+
+    final vCardData = vcard.getFormattedString();
+
+    return vCardData;
   }
 }

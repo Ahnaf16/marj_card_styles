@@ -52,7 +52,7 @@ class ClassicV2Card extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("About", style: context.textTheme.titleLarge),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 2, width: double.infinity),
                     Text(
                       card.about,
                       style: context.textTheme.titleMedium?.copyWith(
@@ -71,7 +71,25 @@ class ClassicV2Card extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Contact", style: context.textTheme.titleLarge),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Contact", style: context.textTheme.titleLarge),
+                        TextButton.icon(
+                          style: FilledButton.styleFrom(
+                            fixedSize: const Size.fromHeight(40),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onPressed: () async {
+                            VCardManage.downloadCard(card);
+                          },
+                          icon: const Icon(Icons.save_alt_rounded),
+                          label: const Text('Save'),
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: 2),
                     ActionCard(
                       label: Text(card.primaryPhone),
@@ -166,28 +184,33 @@ class ClassicV2Card extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text(
-              "Gallery",
-              style: context.textTheme.titleLarge,
-            ),
-            const SizedBox(height: 2),
-            MasonryGridView.builder(
-              physics: const ScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate:
-                  const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+            if (card.gallery.isNotEmpty)
+              Column(
+                children: [
+                  Text(
+                    "Gallery",
+                    style: context.textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 2),
+                  MasonryGridView.builder(
+                    physics: const ScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                    ),
+                    itemCount: card.gallery.length,
+                    itemBuilder: (context, index) => Card(
+                      child: KCachedImg(
+                        card.gallery[index],
+                        fit: BoxFit.cover,
+                        padding: const EdgeInsets.all(0),
+                        showPreview: true,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              itemCount: card.gallery.length,
-              itemBuilder: (context, index) => Card(
-                child: KCachedImg(
-                  card.gallery[index],
-                  fit: BoxFit.cover,
-                  padding: const EdgeInsets.all(0),
-                  showPreview: true,
-                ),
-              ),
-            ),
           ],
         ),
       ),

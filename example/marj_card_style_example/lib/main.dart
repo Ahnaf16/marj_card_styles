@@ -57,34 +57,42 @@ class _MyHomePageState extends State<MyHomePage> {
     style: CardStyle.classic,
   );
 
-  changeStyle(CardStyle style) {
-    setState(() => card = card.copyWith(style: style));
+  changeStyle() {
+    const styles = CardStyle.values;
+    final current = styles.indexOf(card.style);
+    int index = current + 1;
+    if (index == styles.length) index = 0;
+    setState(() => card = card.copyWith(style: styles[index]));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('STYLES'),
-        actions: [
-          Text(card.style.name),
-          const SizedBox(width: 10),
-          FilledButton(
-            onPressed: () {
-              const styles = CardStyle.values;
-              final current = styles.indexOf(card.style);
-              int index = current + 1;
-              if (index == styles.length) index = 0;
-              changeStyle(styles[index]);
-            },
-            child: const Text('Change style'),
+    return Center(
+      child: Container(
+        decoration: const BoxDecoration(
+          border: Border.symmetric(
+            vertical: BorderSide(),
           ),
-          const SizedBox(width: 10),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: card.style.styled(card),
+        ),
+        width: 800,
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('STYLES'),
+            actions: [
+              Text(card.style.name),
+              const SizedBox(width: 10),
+              FilledButton(
+                onPressed: () {
+                  changeStyle();
+                },
+                child: const Text('Change style'),
+              ),
+              const SizedBox(width: 10),
+            ],
+          ),
+          body: SingleChildScrollView(
+            child: card.style.styled(card),
+          ),
         ),
       ),
     );
