@@ -6,20 +6,20 @@
   "configurations": [
     {
       "name": "marj_card_style_example",
-      "cwd": "example\\marj_card_style_example",
+      "cwd": "example",
       "request": "launch",
       "type": "dart"
     },
     {
       "name": "marj_card_style_example (profile mode)",
-      "cwd": "example\\marj_card_style_example",
+      "cwd": "example",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile"
     },
     {
       "name": "marj_card_style_example (release mode)",
-      "cwd": "example\\marj_card_style_example",
+      "cwd": "example",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release"

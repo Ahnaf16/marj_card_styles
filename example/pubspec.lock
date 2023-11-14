@@ -283,7 +283,7 @@ packages:
   marj_card_styles:
     dependency: "direct main"
     description:
-      path: "../.."
+      path: ".."
       relative: true
     source: path
     version: "0.0.9"
