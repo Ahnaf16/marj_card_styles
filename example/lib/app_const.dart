@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:marj_card_styles/marj_card_styles.dart';
 
 final defaultCard = CardModel(
@@ -28,4 +29,9 @@ final defaultCard = CardModel(
   bio: 'my bio',
   createDate: DateTime.now(),
   style: CardStyle.classic,
+  cardBackImg:
+      'https://wallpapers.com/images/hd/abstract-background-6m6cjbifu3zpfv84.jpg',
+  cardFrontImg:
+      'https://img.freepik.com/premium-photo/abstract-background-images-wallpaper-ai-generated_643360-2395.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1699488000&semt=ais',
+  themeMode: ThemeMode.light,
 );

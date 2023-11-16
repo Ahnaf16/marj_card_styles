@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:marj_card_styles/src/model/model.dart';
 
 class CardModel {
@@ -20,6 +21,9 @@ class CardModel {
     required this.bio,
     required this.createDate,
     required this.style,
+    required this.cardFrontImg,
+    required this.cardBackImg,
+    required this.themeMode,
   });
 
   factory CardModel.fromMap(Map<String, dynamic> map) {
@@ -41,6 +45,9 @@ class CardModel {
       website: map['website'] ?? '',
       createDate: map['createDate'],
       style: CardStyle.values.byName(map['style']),
+      cardBackImg: map['cardBackImg'],
+      cardFrontImg: map['cardFrontImg'],
+      themeMode: _toThemeMode(map['themeMode']),
     );
   }
 
@@ -63,6 +70,9 @@ class CardModel {
       website: doc['website'],
       createDate: (doc['createDate'] as Timestamp).toDate(),
       style: CardStyle.values.byName(doc['style']),
+      cardBackImg: doc['cardBackImg'],
+      cardFrontImg: doc['cardFrontImg'],
+      themeMode: _toThemeMode(doc['themeMode']),
     );
   }
 
@@ -82,6 +92,9 @@ class CardModel {
     cardId: '',
     createDate: DateTime.now(),
     style: CardStyle.classic,
+    cardBackImg: '',
+    cardFrontImg: '',
+    themeMode: ThemeMode.light,
   );
 
   final String docId;
@@ -99,8 +112,34 @@ class CardModel {
   final String about;
   final String bio;
   final DateTime createDate;
-  //enum
+  final String cardFrontImg;
+  final String cardBackImg;
   final CardStyle style;
+  final ThemeMode themeMode;
+
+  CardModel toggleMode() {
+    return CardModel(
+      docId: docId,
+      about: about,
+      userId: userId,
+      bio: bio,
+      coverImg: coverImg,
+      email: email,
+      gallery: gallery,
+      name: name,
+      primaryPhone: primaryPhone,
+      profilePhoto: profilePhoto,
+      secondaryPhone: secondaryPhone,
+      socials: socials,
+      website: website,
+      createDate: createDate,
+      cardId: cardId,
+      style: style,
+      cardBackImg: cardBackImg,
+      cardFrontImg: cardFrontImg,
+      themeMode: themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark,
+    );
+  }
 
   CardModel copyWith({
     String? about,
@@ -118,6 +157,9 @@ class CardModel {
     String? cardId,
     DateTime? createDate,
     CardStyle? style,
+    String? cardFrontImg,
+    String? cardBackImg,
+    ThemeMode? themeMode,
   }) {
     return CardModel(
       docId: docId,
@@ -137,6 +179,9 @@ class CardModel {
       createDate: createDate ?? this.createDate,
       cardId: cardId ?? this.cardId,
       style: style ?? this.style,
+      cardBackImg: cardBackImg ?? this.cardBackImg,
+      cardFrontImg: cardFrontImg ?? this.cardFrontImg,
+      themeMode: themeMode ?? this.themeMode,
     );
   }
 
@@ -158,9 +203,18 @@ class CardModel {
     result.addAll({'createDate': createDate});
     result.addAll({'cardId': cardId});
     result.addAll({'style': style.name});
+    result.addAll({'cardFrontImg': cardFrontImg});
+    result.addAll({'cardBackImg': cardBackImg});
+    result.addAll({'themeMode': themeMode.name});
 
     return result;
   }
+
+  static ThemeMode _toThemeMode(String name) => switch (name) {
+        'dark' => ThemeMode.dark,
+        'light' => ThemeMode.light,
+        _ => ThemeMode.light,
+      };
 
   @override
   bool operator ==(Object other) {
@@ -182,7 +236,10 @@ class CardModel {
         other.about == about &&
         other.bio == bio &&
         other.createDate == createDate &&
-        other.style == style;
+        other.cardFrontImg == cardFrontImg &&
+        other.cardBackImg == cardBackImg &&
+        other.style == style &&
+        other.themeMode == themeMode;
   }
 
   @override
@@ -202,6 +259,9 @@ class CardModel {
         about.hashCode ^
         bio.hashCode ^
         createDate.hashCode ^
-        style.hashCode;
+        cardFrontImg.hashCode ^
+        cardBackImg.hashCode ^
+        style.hashCode ^
+        themeMode.hashCode;
   }
 }

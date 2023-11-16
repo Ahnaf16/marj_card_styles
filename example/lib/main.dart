@@ -14,12 +14,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: Palette.defTheme,
-      home: const MyHomePage(),
-    );
+    return const MyHomePage();
   }
 }
 
@@ -39,38 +34,62 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   void initState() {
     super.initState();
-    _ctrl = TabController(length: CardStyle.values.length, vsync: this);
+    _ctrl = TabController(
+      length: CardStyle.values.length,
+      initialIndex: 1,
+      vsync: this,
+    );
+  }
+
+  void toggleThemeMode() {
+    setState(() => card = card.toggleMode());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        decoration: const BoxDecoration(
-          border: Border.symmetric(
-            vertical: BorderSide(),
-          ),
-        ),
-        width: 800,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('STYLES'),
-            bottom: TabBar(
-              controller: _ctrl,
-              tabs: [
-                ...CardStyle.values.map((e) => Tab(text: e.name)),
-              ],
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: MARJTheme.light,
+      darkTheme: MARJTheme.dark,
+      themeMode: card.themeMode,
+      home: Center(
+        child: Container(
+          decoration: const BoxDecoration(
+            border: Border.symmetric(
+              vertical: BorderSide(),
             ),
           ),
-          body: TabBarView(
-            controller: _ctrl,
-            children: [
-              ...CardStyle.values.map(
-                (e) => SingleChildScrollView(
-                  child: e.styled(card),
+          width: 800,
+
+          ///* Start ---------------------------
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text('STYLES'),
+              actions: [
+                Text(card.themeMode.name),
+                Switch(
+                  value: card.themeMode == ThemeMode.light,
+                  onChanged: (value) => toggleThemeMode(),
                 ),
+              ],
+              bottom: TabBar(
+                controller: _ctrl,
+                tabs: [
+                  ...CardStyle.values.map((e) => Tab(text: e.name)),
+                ],
               ),
-            ],
+            ),
+            body: TabBarView(
+              controller: _ctrl,
+              children: [
+                ...CardStyle.values.map(
+                  (e) => SingleChildScrollView(
+                    child: e.styled(card),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
